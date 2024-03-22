@@ -1,0 +1,80 @@
+variable,description,source
+chapter,the chapter that the item appears in,items
+class_id,a unique identifier for this particular class,items
+dcl_hint,the text that appears in the hint box,items
+dcl_pre_exercise_code,the code run invisibly to set up the module,items
+dcl_sample_code,the code in the module when it first loads,items
+dcl_sct,the solution checking code (see the testwhat package for details),items
+dcl_solution,the code that appears in the solution tab,items
+institution_id,a unique identifier for the institution the class was taken at,items
+item_id,a unique identifier for this particular question (the values are arbitrary),items
+item_type,whether this is a learnosity (question about non-coding content)  item or a coding item,items
+lrn_activity_reference,the unique ID for the activity on Learnosity,items
+lrn_question_position,"for multi-question items, the position of the question in the item",items
+lrn_question_reference,the unique ID for the question on Learnosity,items
+lrn_template_name,the template used to create the item,items
+page,the page that the item appears on,items
+chapter,the chapter the video is in,media_views
+class_id,a unique identifier for this particular class,media_views
+dt_last_event,a datetime object indicating when the video was last interacted with (timezone: GMT/UTC),media_views
+dt_started,a datetime object indicating when the video was first started (timezone: GMT/UTC),media_views
+institution_id,a unique identifier for the institution the class was taken at,media_views
+media_id,the unique identifier for the video,media_views
+page,the page that the video is on,media_views
+proportion_time,"the proportion of the full video runtime that the student has spent watching a video, regardless of which part of the video they watched (e.g. if the video is 10 seconds long, and the student watches the first 5 seconds three times, this value should be 1.5)",media_views
+proportion_video,"the proportion of the video that student has watched, summed across all interactions with the video",media_views
+student_id,unique id identifying a student,media_views
+chapter,the chapter that the item appears in,page_views
+class_id,a unique identifier for this particular class,page_views
+dt_accessed,A datetime object indicating when the page was accessed (timezone: GMT/UTC),page_views
+engaged,"The amount of time the user was considered ""engaged"", in milliseconds, in the material. To maintain engagement, the user must do something on the page (click, mouse movement, scroll, etc.) at least every 2 minutes.",page_views
+idle_brief,"The sum of time the user was considered""idle"" for a""brief"" period of time. A user is considered""idle"" if they are on the page but are not""engaged"". The time period is considered""brief"" if it is less than 15 minutes. Note that the""idle"" periods are retroactively tagged such that the period will start at the last known engagement activity. For a concrete example: 1. user clicks something; 2. reads one minute; 3. clicks something; 4. leaves, comes back 10 minutes later; 5. clicks something. This user would be considered engaged for 1 minute, then idle for 10 minutes. The caveat to this approach is that if they user read the screen for 5 minutes, then left and came back, they would still be considered idle for all of them. This is likely a rare scenario, and in any event, one we can't detect anyway.",page_views
+idle_long,"The sum of times that the user was considered""idle"" for a""long"" period of time. A user is considered""idle"" if they are on the page but are not""engaged"". The time period is considered""long"" if it is more than 15 minutes.",page_views
+institution_id,a unique identifier for the institution the class was taken at,page_views
+off_page_brief,"The sum of timet the user was considered""off page"" for a""brief"" period of time. A user is considered""off page"" if they have the page open but the page is not focused (e.g.it is open in another tab or the browser is not the active program). The time period is considered""brief"" if it is less than 15 minutes.",page_views
+off_page_long,"The sum of the periods that the user was considered""off page"" for a""long"" period of time. A user is considered""off page"" if they have the page open but the page is not focused (e.g. it is open in another tab or the browser is not the active program). The time period is considered""long"" if it is more than 15 minutes.",page_views
+page,"the page that the item appears on; includes the title, chapter and section.",page_views
+student_id,a unique identifier for each student on CourseKata,page_views
+tried_again_clicks,"Number of ""try again"" clicks (once students complete a page, they can reset the page to ""try again"") regardless of whether that ""try again"" button was pushed on this access time",page_views
+tried_again_dt,A datetime object indicating when “try again” button was clicked (timezone: GMT/UTC),page_views
+was_complete,"When the student accessed the page, were they coming back after already having completed it?",page_views
+attempt,"the number of times the question has been attempted, including the current attempt",responses
+book,book name,responses
+chapter,the chapter that the item appears in,responses
+class_id,a unique identifier for this particular class,responses
+dt_submitted,a datetime object indicating when the response was submitted (timezone: GMT/UTC),responses
+institution_id,a unique identifier for the institution the class was taken at,responses
+item_id,a unique identifier for this particular question (the values are arbitrary — treat them as random identifiers),responses
+item_type,whether this is a learnosity or coding item,responses
+lrn_activity_reference,the unique ID for the activity on Learnosity,responses
+lrn_dt_saved,a datetime object indicating when the responses was saved (timezone: GMT/UTC),responses
+lrn_dt_started,a datetime object indicating when the responses was started (timezone: GMT/UTC),responses
+lrn_question_position,"for multi-question items, the position of the question in the item",responses
+lrn_question_reference,the unique ID for the question on Learnosity,responses
+lrn_response_id,the unique ID for this particular response on Learnosity,responses
+lrn_status,the status of the question response on Learnosity (e.g. “Completed”),responses
+lrn_type,"the Learnosity type of the question (e.g. mcq, shorttext, plaintext, rating, etc.)",responses
+page,"the page that the item appears on; includes the title, chapter and section.",responses
+points_earned,the number of points earned,responses
+points_possible,the number of points possible if the completely correct answer is given,responses
+prompt,the question prompt for this response,responses
+release,"release number (version of the book, e.g., 4.2, 5.1, 5.3)",responses
+response,"the value of the response: either the value (for shorttext, plaintext, ratings, datacamp, etc.) or an array of numbers indicating the position of the multiple choice answers chosen and which correspond to the columns lrn_option_.",responses
+student_id,unique id identifying a student,responses
+user_agent,"the browser user agent string for the user (see for details: https://developer.chrome.com/multidevice/user-agent; also, this R package for parsing: uaparserjs)",responses
+book,the book name,checkpoints_EOC
+chapter_number,the chapter (as a number).,checkpoints_pulse
+book,the book name,checkpoints_pulse
+release,"release version (version of the book, e.g., 5.0.1, 5.1, 5.3); named for the github branch for the materials",checkpoints_pulse
+institution_id,a unique identifier for the institution the class was taken at,checkpoints_pulse
+class_id,a unique identifier for this particular class,checkpoints_pulse
+class_id,a unique identifier for this particular class,checkpoints_EOC
+student_id,unique id identifying a student,checkpoints_EOC
+student_id,a unique id identifying a student,checkpoints_pulse
+response,"the value of the response: either the value (for shorttext, plaintext, ratings, datacamp, etc.) or an array of numbers indicating the position of the multiple choice answers chosen and which correspond to the columns lrn_option_.",checkpoints_pulse
+construct,"The psychological construct measured by the pulse-check item. One of cost, expectancy, Intrinstic Value, Utility Value. These items are meant to gauge the student's attitudes about the content being studied.",checkpoints_pulse
+chapter_number,the chapter (as a number).,checkpoints_EOC
+EOC,proportion of correct answers for end of chapter questions for current chapter,checkpoints_EOC
+n_possible,The number of end-of-chapter questions for the current chapter and so the highest possible score.,checkpoints_EOC
+n_correct,The number of end-of-chapter questions that were correct for the current chapter,checkpoints_EOC
+n_attempt,"The number of attempts to answer the end of chapter questions as a whole. For example, if there were three questions, and the 2nd question was attempted twice, the n_attemps is 4.",checkpoints_EOC
