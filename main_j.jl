@@ -122,4 +122,109 @@ end
 V_store_for_later, policy, max_idxs = solve_vfi(p, LinRange(1e-4, 10, 100))
 display(plot(plots_investment..., layout=(2, 2), size=(800, 600)))
 display(plot(plots_labour..., layout=(2, 2), size=(800, 600)))
-#display(plot(plots_consumption..., layout=(2, 2), size=(800, 600)))
+display(plot(plots_consumption..., layout=(2, 2), size=(800, 600)))
+
+# New attempt at part b 
+
+function update_bellman_1b!(p, V, policy, kgrid, V0)
+    @unpack β, δ, σ, ν, α, A, ϕ = p
+    n = length(kgrid)
+    l_values = LinRange(0, 1, 50)  # Adjusting the number of choices for labor supply
+    vmax = -Inf
+    
+    for i in 1:n
+        k = kgrid[i]
+
+        ki′ = 0
+        li′ = 0
+        ci′ = 0
+        
+        for j in 1:n
+            k′ = kgrid[j]
+            for b in 1:length(l_values)  # Using num_l_values for the loop
+                l = l_values[b]
+                c′ = A * k^α * l^(1-α) + (1-δ) * k - k′
+                if c′ >= 0
+                    v = u(c′, l, p) + β * V0[j]
+                    if v >= vmax
+                        vmax = v
+                        ki′ = j
+                        li′ = b
+                        ci′ = c′
+                    end
+                end
+            end
+        end
+
+        V[i] = vmax 
+        policy[i] = (ki′, li′, ci′)  
+    end
+end
+
+function policy_step!(p, V, policy, kgrid, V0)
+    @unpack β, δ, σ, ν, α, A, ϕ = p
+    n = length(kgrid)
+    l_values = LinRange(0, 1, 50)  # Adjusting the number of choices for labor supply
+    
+    for i in 1:n
+        vmax = -Inf
+        k = kgrid[i]
+        k′ = kgrid[policy[i][1]]  # Corrected indexing
+        li′ = policy[i][2]         # Extract labor supply index from policy
+
+        # Calculate consumption
+        c = A * k^α * l_values[li′]^(1-α) + (1-δ) * k - k′
+
+        # Calculate utility
+        v = u(c, l_values[li′], p) + β * V0[policy[i][1]]  # Corrected indexing
+        
+        V[i] = v
+    end
+end
+
+
+function solve_pfi!(p, kgrid, V0; tol = 1e-12, policy_steps = 0, max_iter = 1000)
+    V0      = copy(V0)
+    V       = similar(V0)
+    Vs      = similar(V0)
+    
+    policy = Array{Tuple{Int, Int, Float64}}(undef, length(kgrid))  # Initialize policy array
+    
+    # Initialize lists to store errors and iteration count
+    errors = Float64[]
+    iter = 0
+    
+    # Main iteration loop
+    while true
+        iter += 1
+        
+        # Update value function using Bellman equation
+        update_bellman_1b!(p, Vs, policy, kgrid, V0)
+        
+        # Copy updated value function to V_current
+        V .= Vs
+        
+        # Iterate on the policy rule if necessary
+        for i in 1:policy_steps
+            policy_step!(p, V, policy, kgrid, Vs)
+            Vs .= V
+        end
+        
+        # Calculate and save the maximum error
+        ϵ = maximum(abs.(V - V0))
+        push!(errors, ϵ)
+        
+        # Check for convergence and maximum iterations
+        if ϵ < tol || iter > max_iter
+            break
+        end
+        
+        # Update V_initial for next iteration
+        V0 .= V
+    end
+    
+    # Return results
+    return (; V, policy, iter,errors)
+end
+
+
